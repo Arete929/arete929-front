@@ -1,0 +1,224 @@
+<!doctype html>
+<!-- 파일명: index.html | arete929.kr 정문 — 공개로 켠 앱만 보이는 링크 모음 | @version 1.0.0 -->
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>arete929.kr</title>
+<meta name="description" content="수업과 학급에 쓰는 웹앱 모음">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root{--paper:#f4f1e9;--ink:#24221e;--sub:#6f6a5e;--line:#d6cfbf;--card:#fffdf8;--edge:#bfb6a3;--glass:rgba(255,253,248,.95);
+  --fade:linear-gradient(to bottom,rgba(244,241,233,.18) 0%,rgba(244,241,233,.42) 50%,#f4f1e9 97%);
+  --fade-side:linear-gradient(to bottom,rgba(244,241,233,.12) 0%,rgba(244,241,233,.4) 34%,#f4f1e9 58%)}
+body.night{--paper:#121417;--ink:#f2f0ea;--sub:#a9a8a1;--line:#2c3036;--card:#1b1e23;--edge:#3a3f47;--glass:rgba(27,30,35,.96);
+  --fade:linear-gradient(to bottom,rgba(18,20,23,.3) 0%,rgba(18,20,23,.68) 36%,#121417 60%);--fade-side:var(--fade)}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{position:relative;min-height:100vh;background:var(--paper);color:var(--ink);font-family:Pretendard,'Malgun Gothic',sans-serif;font-size:15px;-webkit-text-size-adjust:100%}
+button{font:inherit;color:inherit;cursor:pointer}
+a{color:inherit;text-decoration:none}
+.dh{font-family:'Do Hyeon',Pretendard,sans-serif;font-weight:400}
+
+/* 배경 그림 — 위에서 깔리고 아래로 사라진다 */
+.bg{position:absolute;left:0;right:0;top:0;height:min(60vh,520px);background:url(bg.jpg) center 42%/cover no-repeat;z-index:0}
+.bg::after{content:'';position:absolute;inset:0 0 -2px 0;background:var(--fade)}
+
+.page{position:relative;z-index:1;max-width:480px;margin:0 auto;padding:14px 16px 28px}
+.topline{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;font-size:12.5px;margin-bottom:10px}
+.topline a,.tbtn,.tseg{background:var(--glass);border:1px solid var(--edge);border-radius:6px}
+.topline a,.tbtn{padding:6px 10px;font-size:12.5px}
+.tseg{display:inline-flex;overflow:hidden}
+.tseg button{border:0;background:none;padding:6px 10px;font-size:12.5px}
+.tseg button.on{background:var(--ink);color:var(--paper)}
+.sheet{background:var(--glass);border-radius:22px;padding:0 16px 18px;margin-top:210px;box-shadow:0 2px 14px rgba(0,0,0,.10)}
+.me{text-align:center;padding:0 0 16px}
+.av{width:88px;height:88px;border-radius:50%;background:var(--ink);color:var(--paper);display:grid;place-items:center;margin:-44px auto 10px;font-size:30px;border:4px solid var(--card);overflow:hidden}
+.av img{width:100%;height:100%;object-fit:cover}
+.me h1{margin:0;font-size:30px;line-height:1.1}
+.me p{margin:6px 0 0;color:var(--sub);font-size:14px;word-break:keep-all}
+.dom{display:inline-block;margin-top:8px;font-size:12px;font-weight:700;background:#e3dac6;color:#4a4335;border-radius:999px;padding:3px 10px}
+.night .dom{background:#2c3036;color:#f2f0ea}
+
+/* 묶음 고르기 — 넓은 가로 화면은 사이드바 단추, 그 밖에는 가로 칩 */
+.snav{display:none;flex-direction:column;gap:6px;margin-top:18px;text-align:left}
+.sb{--c:var(--ink);display:flex;justify-content:space-between;align-items:center;border:1.5px solid var(--edge);border-left:6px solid var(--c);background:var(--card);border-radius:6px;padding:8px 12px;font-size:14px}
+.sb small{color:var(--sub)}
+.sb.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.sb.on small{color:inherit;opacity:.7}
+.chips{display:flex;gap:7px;overflow-x:auto;margin:0 -16px 12px;padding:0 16px 3px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1.5px solid var(--edge);background:var(--card);border-radius:6px;padding:7px 12px;font-size:13.5px;white-space:nowrap}
+.chip.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+/* 타일 */
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.tile{--c:#555;border:1.5px solid var(--ink);border-radius:8px;box-shadow:0 3px 0 var(--ink);background:var(--card);overflow:hidden;display:flex;flex-direction:column;min-height:132px}
+.tile .cat{background:var(--c);color:#fff;font-size:12px;font-weight:700;padding:5px 10px}
+.tile .go{flex:1;padding:10px;display:flex;flex-direction:column;gap:3px}
+.tile .go:active{background:rgba(0,0,0,.04)}
+.tile b{font-size:15px;line-height:1.3;word-break:keep-all}
+.tile small{font-size:12px;color:var(--sub);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.tile .cpw{border:0;border-top:1px solid var(--line);background:none;padding:8px;font-size:12.5px;color:var(--sub);display:flex;align-items:center;justify-content:center;gap:5px}
+.tile .cpw svg{width:15px;height:15px}
+.night .tile{border-color:color-mix(in srgb,var(--c) 55%,#fff);box-shadow:0 0 16px color-mix(in srgb,var(--c) 70%,transparent)}
+.night .tile .cat{background:color-mix(in srgb,var(--c) 75%,#000)}
+.night .sb{border-left-color:color-mix(in srgb,var(--c) 60%,#fff)}
+.big{display:flex;flex-direction:column;justify-content:center;min-height:58px;padding:9px 14px;border-radius:8px;background:var(--ink);color:var(--paper);margin:0 0 12px}
+.big b{font-size:15.5px}
+.big small{font-size:12.5px;opacity:.75;margin-top:2px}
+.note{text-align:center;color:var(--sub);font-size:14px;padding:26px 8px;line-height:1.6}
+.note button{margin-top:10px;border:1.5px solid var(--ink);background:var(--card);border-radius:6px;padding:8px 14px;font-weight:700}
+
+.foot{text-align:center;font-size:12px;color:var(--sub);padding:14px 0 0;line-height:1.7}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#24221e;color:#fff;padding:9px 14px;border-radius:6px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none;white-space:nowrap;z-index:9;max-width:92vw;overflow:hidden;text-overflow:ellipsis}
+.toast.on{opacity:1}
+
+/* 넓은 세로 화면(폴드 펼침·세로 모니터): 그림이 크게 깔리고 흰 판 안에 왼쪽 명함·오른쪽 링크 */
+@media (min-width:700px){
+  .bg{height:82vh}
+  .page{max-width:940px;padding:20px 24px 36px}
+  .sheet{display:grid;grid-template-columns:250px minmax(0,1fr);gap:0 40px;padding:0 30px 26px;margin-top:max(120px,24vh)}
+  .me{align-self:start}
+  .links{padding-top:22px}
+}
+/* 가로 화면(PC·폴드 가로): 왼쪽 사이드바에 그림·명함·묶음 메뉴, 오른쪽에 링크 */
+@media (orientation:landscape) and (min-width:700px){
+  :root{--sw:330px}
+  .bg{position:fixed;right:auto;bottom:0;width:var(--sw);height:100vh;background-position:center top;background-size:auto 58%;border-right:1px solid var(--line)}
+  .bg::after{background:var(--fade-side)}
+  .page{max-width:none;margin:0;padding:28px 32px 30px calc(var(--sw) + 34px)}
+  .sheet{display:block;background:none;box-shadow:none;border-radius:0;margin:0;padding:0}
+  .me{position:fixed;left:16px;top:25vh;width:calc(var(--sw) - 32px);padding:0 16px 16px;background:var(--glass);border-radius:18px;box-shadow:0 2px 14px rgba(0,0,0,.12)}
+  .snav{display:flex}
+  .chips{display:none}
+  .topline{position:fixed;z-index:3;left:22px;width:calc(var(--sw) - 44px);bottom:56px;margin:0}
+  .foot{position:fixed;z-index:3;left:0;width:var(--sw);bottom:10px;padding:0}
+  .links{padding-top:0;max-width:900px}
+  .tiles{grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
+  .big{max-width:560px}
+}
+@media (orientation:landscape) and (min-width:700px) and (max-height:600px){ .snav{display:none} .chips{display:flex} }
+/* 폰 가로: 사이드바를 오른쪽에, 작게 */
+@media (orientation:landscape) and (max-height:520px){
+  :root{--sw:236px}
+  .bg{left:auto;right:0;border-right:0;border-left:1px solid var(--line);background-size:cover}
+  .page{padding:14px calc(var(--sw) + 16px) 16px 16px}
+  .me{left:auto;right:12px;top:54px;width:calc(var(--sw) - 24px);padding:0 10px 12px}
+  .me h1{font-size:24px}
+  .me p{font-size:12.5px}
+  .av{width:56px;height:56px;font-size:20px;margin-top:-28px}
+  .topline{left:auto;right:14px;width:calc(var(--sw) - 28px);bottom:46px;justify-content:center}
+  .foot{left:auto;right:0;font-size:11px}
+}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="page">
+  <div class="topline"><a id="myLink" href="#" rel="noopener">내 런처 (잠금)</a><span class="tseg"><button data-th="day">낮</button><button data-th="night">밤</button></span><button class="tbtn" id="shareBtn">이 주소 복사</button></div>
+  <div class="sheet">
+    <header class="me">
+      <div class="av dh" id="av"></div>
+      <h1 class="dh" id="ttl"></h1>
+      <p id="tag"></p>
+      <span class="dom">arete929.kr</span>
+      <nav class="snav" id="snav"></nav>
+    </header>
+    <main class="links" id="links"><div class="note">불러오는 중…</div></main>
+  </div>
+  <footer class="foot"><div id="footLine"></div><div>ⓒKIMJINHO</div></footer>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+/* ── 여기만 고치면 됩니다 ───────────────────────────── */
+const CFG={
+  api:'https://script.google.com/macros/s/AKfycbwot9uum8L5CUb6ouJdI03nwg6jS8WPJ0zu91y8EthdYWf0mVSMLws4zV2I6cEWry_0/exec',
+  name:'김진호',                       // 명함 이름
+  avatar:'진호',                       // 동그라미 안 글자 (사진을 쓰려면 avatarImg 에 파일 이름)
+  avatarImg:'',
+  tagline:'혜원여중 체육 · 수업과 학급에 쓰는 앱을 만듭니다',
+  site:'https://arete929.kr/',
+  my:'https://my.arete929.kr/',
+  easy:{url:'https://hw-easy.arete929.kr/',title:'혜원이지 내려받기',sub:'선생님 PC용 프로그램'},
+  version:'v1.0.0',
+  deployed:''                          // 배포할 때 실제 시각(KST, 예: 2026-11-17 21:30)을 넣는다
+};
+/* ──────────────────────────────────────────────────── */
+const QS=new URLSearchParams(location.search), DEMO=QS.get('demo')==='1';
+const PAL=['#2f7a55','#34539c','#b5502f','#a46c12','#6a4c9c','#1f7a8c','#9c3d6b','#5a6676'];
+const COPY='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="11" height="11" rx="2"/><path d="M15.5 8.5V6a1.5 1.5 0 0 0-1.5-1.5H6A1.5 1.5 0 0 0 4.5 6v8A1.5 1.5 0 0 0 6 15.5h2.5"/></svg>';
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const okUrl=u=>/^https?:\/\//i.test(String(u||''));
+let APPS=[], CATS=[], F='전체';
+
+/* 테마: 주소(?th=) > 이 기기에서 고른 값 > 기기 다크 모드 */
+function setTheme(t,save){
+  document.body.classList.toggle('night',t==='night');
+  document.querySelectorAll('[data-th]').forEach(b=>b.classList.toggle('on',b.dataset.th===t));
+  if(save){try{localStorage.setItem('front-theme',t)}catch(e){}}
+}
+(function(){let t=QS.get('th');
+  if(!t){try{t=localStorage.getItem('front-theme')}catch(e){}}
+  if(t!=='day'&&t!=='night') t=(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'night':'day';
+  setTheme(t)})();
+
+function colorOf(tab){const i=CATS.indexOf(tab);return PAL[(i<0?PAL.length-1:i)%PAL.length]}
+function setData(list){
+  APPS=(list||[]).filter(a=>a&&a.t&&okUrl(a.u)).map((a,i)=>({i,n:String(a.t),u:String(a.u),d:String(a.d||''),c:String(a.tab||'기타')}));
+  CATS=[];APPS.forEach(a=>{if(CATS.indexOf(a.c)<0)CATS.push(a.c)});
+  if(F!=='전체'&&CATS.indexOf(F)<0) F='전체';
+  draw();
+}
+function draw(){
+  const L=F==='전체'?APPS:APPS.filter(a=>a.c===F);
+  const cats=['전체',...CATS], cnt=c=>c==='전체'?APPS.length:APPS.filter(a=>a.c===c).length;
+  const chips=CATS.length>1&&APPS.length>6?`<div class="chips">${cats.map(c=>`<button class="chip${c===F?' on':''}" data-f="${esc(c)}">${esc(c)}</button>`).join('')}</div>`:'';
+  const tiles=L.length?`<div class="tiles">${L.map(a=>`<div class="tile" style="--c:${colorOf(a.c)}"><span class="cat">${esc(a.c)}</span><a class="go" href="${esc(a.u)}" target="_blank" rel="noopener"><b>${esc(a.n)}</b><small>${esc(a.d)}</small></a><button class="cpw" data-cp="${a.i}">${COPY}<span>주소 복사</span></button></div>`).join('')}</div>`
+    :`<div class="note">아직 공개한 앱이 없습니다.</div>`;
+  const easy=CFG.easy&&okUrl(CFG.easy.url)?`<a class="big" href="${esc(CFG.easy.url)}" target="_blank" rel="noopener"><b>${esc(CFG.easy.title)}</b><small>${esc(CFG.easy.sub)}</small></a>`:'';
+  $('#links').innerHTML=chips+tiles+easy;
+  $('#snav').innerHTML=CATS.length>1?cats.map(c=>`<button class="sb${c===F?' on':''}" data-f="${esc(c)}" style="--c:${c==='전체'?'var(--ink)':colorOf(c)}"><span>${c==='전체'?'전체 보기':esc(c)}</span><small>${cnt(c)}</small></button>`).join(''):'';
+}
+function fail(){
+  if(APPS.length) return;                              // 예전에 받아 둔 목록이 화면에 있으면 그대로 둔다
+  $('#links').innerHTML='<div class="note">목록을 불러오지 못했습니다.<br><button id="retry">다시 불러오기</button></div>';
+}
+async function load(){
+  if(DEMO){setData([
+    {t:'2학기 스포츠종목 선정',u:'https://example.com/1',d:'학생이 2학기 종목을 고릅니다',tab:'체육수업'},
+    {t:'과세특 작성 도우미',u:'https://example.com/2',d:'세부능력 특기사항 초안 쓰기',tab:'평가'},
+    {t:'2026 짝꿍 선정',u:'https://example.com/3',d:'우리 반 자리 짝 정하기',tab:'담임'},
+    {t:'방과후 출석부 도우미',u:'https://example.com/4',d:'방과후학교 출석부 만들기',tab:'출결'}]);return}
+  try{const c=JSON.parse(localStorage.getItem('front-apps')||'null'); if(c&&c.length) setData(c)}catch(e){}
+  try{
+    const r=await fetch(CFG.api+'?view=front',{redirect:'follow'}); const j=await r.json();
+    if(!j||!j.ok) throw new Error('bad');
+    setData(j.apps); try{localStorage.setItem('front-apps',JSON.stringify(j.apps))}catch(e){}
+  }catch(e){fail()}
+}
+let tt; function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),1800)}
+async function copy(text,msg){
+  try{await navigator.clipboard.writeText(text)}
+  catch(e){const ta=document.createElement('textarea');ta.value=text;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy')}catch(_){}ta.remove()}
+  toast(msg);
+}
+document.addEventListener('click',e=>{
+  const t=e.target.closest('button'); if(!t) return;
+  if(t.dataset.cp!==undefined){const a=APPS[+t.dataset.cp]; if(a) copy(a.u,`${a.n} 주소를 복사했어요`); return}
+  if(t.id==='shareBtn'){copy(CFG.site,'이 주소를 복사했어요');return}
+  if(t.dataset.th){setTheme(t.dataset.th,true);return}
+  if(t.dataset.f){F=t.dataset.f;draw();return}
+  if(t.id==='retry'){$('#links').innerHTML='<div class="note">불러오는 중…</div>';load()}
+});
+$('#ttl').textContent=CFG.name; $('#tag').textContent=CFG.tagline; $('#myLink').href=CFG.my;
+$('#av').innerHTML=CFG.avatarImg?`<img src="${esc(CFG.avatarImg)}" alt="">`:esc(CFG.avatar);
+$('#footLine').textContent=`${document.title} · ${CFG.version} · ${CFG.deployed?'배포 '+CFG.deployed+' (KST)':'배포 전'}`;
+load();
+</script>
+</body>
+</html>
